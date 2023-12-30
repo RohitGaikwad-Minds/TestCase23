@@ -1,0 +1,63 @@
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+public class VerifyAddressTest {
+    public static void main(String[] args) {
+        // Set the path to your ChromeDriver executable
+        System.setProperty("webdriver.chrome.driver", "path_to_chromedriver.exe");
+
+        // Instantiate ChromeDriver
+        WebDriver driver = new ChromeDriver();
+
+        // Navigate to the website
+        driver.get("https://automationexercise.com/");
+
+        // Locate the product you want to purchase and add it to the cart
+
+        // Go to the cart page
+        WebElement cartIcon = driver.findElement(By.xpath("//span[@class='cart-contents']"));
+        cartIcon.click();
+
+        // Proceed to the checkout page
+        WebElement checkoutButton = driver.findElement(By.xpath("//a[@class='checkout-button']"));
+        checkoutButton.click();
+
+        // Enter the required customer details, including the address
+        WebElement firstNameInput = driver.findElement(By.id("billing_first_name"));
+        WebElement lastNameInput = driver.findElement(By.id("billing_last_name"));
+        WebElement addressInput = driver.findElement(By.id("billing_address_1"));
+        WebElement cityInput = driver.findElement(By.id("billing_city"));
+        WebElement postcodeInput = driver.findElement(By.id("billing_postcode"));
+        WebElement phoneInput = driver.findElement(By.id("billing_phone"));
+        WebElement emailInput = driver.findElement(By.id("billing_email"));
+
+        firstNameInput.sendKeys("Mark");
+        lastNameInput.sendKeys("Davis");
+        addressInput.sendKeys("123 Andheri");
+        cityInput.sendKeys("Mumbai");
+        postcodeInput.sendKeys("12345");
+        phoneInput.sendKeys("1234567890");
+        emailInput.sendKeys("markdavis@example.com");
+
+        // Optionally, retrieve the entered address details
+        String enteredAddress = addressInput.getAttribute("value");
+        String enteredCity = cityInput.getAttribute("value");
+        String enteredPostcode = postcodeInput.getAttribute("value");
+
+        // Verify that the entered address details match the expected values
+        String expectedAddress = "123 Andheri";
+        String expectedCity = "Mumbai";
+        String expectedPostcode = "12345";
+
+        if (enteredAddress.equals(expectedAddress) && enteredCity.equals(expectedCity) && enteredPostcode.equals(expectedPostcode)) {
+            System.out.println("Address details are correct.");
+        } else {
+            System.out.println("Address details are incorrect.");
+        }
+
+        // Close the browser
+        driver.quit();
+    }
+}
